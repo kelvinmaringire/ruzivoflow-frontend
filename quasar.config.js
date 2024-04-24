@@ -72,7 +72,7 @@ module.exports = configure((/* ctx */) => ({
     vitePlugins: [
       ['vite-plugin-checker', {
         eslint: {
-          lintCommand: 'eslint "./**/*.{js,mjs,cjs,vue}"',
+          lintCommand: 'eslint "./**/*.{js,mjs,cjs}"',
         },
       }, { server: false }],
     ],
@@ -86,7 +86,9 @@ module.exports = configure((/* ctx */) => ({
 
   // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
   framework: {
-    config: {},
+    config: {
+      dark: true,
+    },
 
     // iconSet: 'material-icons', // Quasar icon set
     // lang: 'en-US', // Quasar language pack
@@ -99,7 +101,9 @@ module.exports = configure((/* ctx */) => ({
     // directives: [],
 
     // Quasar plugins
-    plugins: [],
+    plugins: [
+      'Meta',
+    ],
   },
 
   // animations: 'all', // --- includes all animations
