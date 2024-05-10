@@ -15,6 +15,14 @@ const routes = [
     ],
   },
 
+  {
+    path: '/dashboard',
+    component: () => import('layouts/DashboardLayout.vue'),
+    children: [
+      { path: '', name: 'dashboard', component: () => import('pages/Dashboard/IndexPage.vue') },
+    ],
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

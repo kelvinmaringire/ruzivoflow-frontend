@@ -23,12 +23,12 @@
           <!-- Contact Button (Hidden for now) -->
           <q-btn flat rounded label="Contact" class="q-mr-sm" v-if="false" />
 
+          <!-- Login Button (Hidden for now) -->
+          <q-btn outline rounded label="Login" to="/auth/login" class="q-mr-sm"  />
+
           <!-- Register Button (Hidden for now) -->
           <q-btn outline rounded label="Register"
-           to="/auth/register" class="q-mr-sm" v-if="false" />
-
-          <!-- Login Button (Hidden for now) -->
-          <q-btn outline rounded label="Login" to="/auth/login" v-if="false" />
+           to="/auth/register" />
         </div>
 
         <div class="lt-md">
@@ -62,14 +62,14 @@
       </q-list>
 
       <!-- Register Button (Hidden for now) -->
-      <q-btn outline rounded label="Register" to="/auth/register" class="q-ma-md" v-if="false" />
+      <q-btn outline rounded label="Register" to="/auth/register" class="q-ma-md" />
 
       <!-- Login Button (Hidden for now) -->
-      <q-btn outline rounded label="Login" to="/auth/login" class="q-my-md" v-if="false" />
+      <q-btn outline rounded label="Login" to="/auth/login" class="q-my-md" />
     </q-drawer>
 
     <!-- Main Content -->
-    <q-page-container>
+    <q-page-container id="hero">
       <!-- Router View -->
       <router-view />
     </q-page-container>
