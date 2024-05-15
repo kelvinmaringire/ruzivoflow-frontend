@@ -12,7 +12,8 @@
             <div class="row">
 
               <div class="col-12 col-md-4 q-pa-xs">
-                <q-img :src="landingPageImage"></q-img>
+                <q-img v-if="homepage.landing_page_image" :src="homepage.landing_page_image.image"
+                :alt="homepage.landing_page_image.name"></q-img>
               </div>
               <div class="col-12 col-md-8 q-pl-md q-pt-md">
                 <div class="text-h3 text-bold  text-info">
@@ -31,7 +32,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useHomePageStore } from '../../stores/homepage-store';
 
@@ -42,16 +42,5 @@ defineOptions({
 const homePageStore = useHomePageStore();
 
 const { homepage } = storeToRefs(homePageStore);
-
-const landingPageImage = computed(() => {
-  const htmlUrl = homepage.value.meta.html_url;
-  const downloadUrl = homepage.value.landing_page_image.meta.download_url;
-  // Remove trailing slash from htmlUrl and leading slash from downloadUrl if present
-  const cleanedHtmlUrl = htmlUrl.endsWith('/') ? htmlUrl.slice(0, -1) : htmlUrl;
-  // const cleanedDownloadUrl = downloadUrl.startsWith('/') ? downloadUrl.slice(1) : downloadUrl;
-
-  // Concatenate the cleaned URLs
-  return cleanedHtmlUrl + downloadUrl;
-});
 
 </script>

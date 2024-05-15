@@ -24,16 +24,18 @@
           </div>
         </q-card-section>
         <q-card-section>
-          <q-form class="q-gutter-md">
-            <q-input label="Username">
+          <q-form class="q-gutter-md"  @submit.prevent="onLogin">
+            <q-input label="Username" v-model="credentials.username">
             </q-input>
-            <q-input label="Password" type="password">
+            <q-input label="Password" type="password" v-model="credentials.password">
             </q-input>
             <div>
               <q-btn class="full-width" color="primary" label="Login" type="submit" rounded></q-btn>
               <div class="text-center q-mt-sm q-gutter-lg">
-                <router-link class="text-white" to="/login">Esqueceu a senha?</router-link>
-                <router-link class="text-white" to="/login">Criar conta</router-link>
+                <router-link class="text-white"
+                :to="{ name: 'password_reset'}">Forgot your password?</router-link>
+                <router-link class="text-white"
+                :to="{ name: 'register'}">Create account</router-link>
               </div>
             </div>
           </q-form>
@@ -46,6 +48,60 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import { useAuthStore } from '../../stores/auth-store';
+
+defineOptions({
+  name: 'LoginPage',
+});
+
+const authStore = useAuthStore();
+const router = useRouter();
+const $q = useQuasar();
+
+const credentials = ref({
+  username: '',
+  password: '',
+});
+
+async function onLogin() {
+  if (!credentials.value.username || !credentials.value.password) {
+    $q.notify({
+      type: 'negative',
+      message: 'The provided data is invalid.',
+      position: 'top',
+    });
+  } else if (credentials.value.password.length < 6) {
+    $q.notify({
+      type: 'negative',
+      message: 'The password must have 6 or more characters.',
+      position: 'top',
+    });
+  } else {
+    try {
+    // Call the doLogin action from the Pinia store with the provided credentials
+      await authStore.doLogin(credentials.value);
+
+      $q.notify({
+        type: 'positive',
+        message: 'Authenticated',
+        position: 'top',
+      });
+
+      router.push({ name: 'dashboard' }); // Make sure to import 'router' if you're using Vue Router
+    } catch (err) {
+      if (err.response.data.detail) {
+        $q.notify({
+          type: 'negative',
+          message: err.response.data.detail,
+          position: 'top',
+        });
+      }
+    }
+  }
+}
 
 </script>
 

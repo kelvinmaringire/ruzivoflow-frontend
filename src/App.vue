@@ -5,8 +5,10 @@
 <script setup>
 
 import { useHomePageStore } from './stores/homepage-store';
+import { useAuthStore } from './stores/auth-store';
 
 const homepageStore = useHomePageStore();
+const authStore = useAuthStore();
 
 defineOptions({
   name: 'App',
@@ -15,6 +17,7 @@ defineOptions({
 // Ensure store initialization
 async function initStore() {
   await homepageStore.fetchHomePageData();
+  await authStore.initAuth();
 }
 
 // Call the initialization function

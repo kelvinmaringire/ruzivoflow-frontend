@@ -15,7 +15,9 @@
       </div>
     </div>
       <div class="col gt-sm q-mt-md">
-        <q-img :src="heroImage"
+        <q-img v-if="homepage.heroImage"
+        :src="homepage.heroImage.image"
+        :alt="homepage.heroImage.name"
         class="q-my-md animated"
         style="margin-left: auto;
         margin-right: auto;
@@ -29,7 +31,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useHomePageStore } from '../../stores/homepage-store';
 
@@ -40,17 +41,6 @@ defineOptions({
 const homePageStore = useHomePageStore();
 
 const { homepage } = storeToRefs(homePageStore);
-
-const heroImage = computed(() => {
-  const htmlUrl = homepage.value.meta.html_url;
-  const downloadUrl = homepage.value.heroImage.meta.download_url;
-  // Remove trailing slash from htmlUrl and leading slash from downloadUrl if present
-  const cleanedHtmlUrl = htmlUrl.endsWith('/') ? htmlUrl.slice(0, -1) : htmlUrl;
-  // const cleanedDownloadUrl = downloadUrl.startsWith('/') ? downloadUrl.slice(1) : downloadUrl;
-
-  // Concatenate the cleaned URLs
-  return cleanedHtmlUrl + downloadUrl;
-});
 
 </script>
 

@@ -6,16 +6,37 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          Title
+          <q-img style="width: 250px" src="../assets/logo/thedatamine.io.png"></q-img>
         </q-toolbar-title>
+
+        <q-btn flat dense color="primary" icon="home" :to="{name: 'homepage'}" class="q-mr-sm">
+        Homepage</q-btn>
+
+        <q-btn flat dense color="negative" icon="power_settings_new"
+         @click="logout()"> Logout</q-btn>
+
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" width="250" side="left">
-      <!-- drawer content -->
+    <q-drawer show-if-above v-model="leftDrawerOpen" :width="200" side="left">
+
+          <q-list class="q-mt-lg">
+
+            <template v-for="(menuItem, index) in menuList" :key="index">
+              <q-item clickable :active="menuItem.label === 'Dashboard'" v-ripple class="q-my-sm"
+              :to="{ name: menuItem.path}">
+                <q-item-section avatar>
+                  <q-icon :name="menuItem.icon" />
+                </q-item-section>
+                <q-item-section>
+                  {{ menuItem.label}}
+                </q-item-section>
+              </q-item>
+              <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
+            </template>
+
+          </q-list>
+
     </q-drawer>
 
     <q-page-container>
@@ -27,10 +48,55 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/auth-store';
+
+const authStore = useAuthStore();
+const router = useRouter();
 
 const leftDrawerOpen = ref(false);
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+function logout() {
+  authStore.logout();
+  router.push({ name: 'homepage' });
+}
+
+const menuList = [
+  {
+    icon: 'dashboard',
+    label: 'Dashboard',
+    separator: true,
+    path: 'dashboard',
+  },
+  {
+    icon: 'insights',
+    label: 'Editor',
+    separator: false,
+    path: 'editor',
+  },
+  {
+    icon: 'sports_soccer',
+    label: 'Betting',
+    separator: true,
+    path: 'betting',
+  },
+
+  {
+    icon: 'school',
+    iconColor: 'primary',
+    label: 'Knowledge',
+    separator: false,
+    path: 'dashboard',
+  },
+  {
+    icon: 'person',
+    label: 'Profile',
+    separator: false,
+    path: 'dashboard',
+  },
+];
 
 </script>

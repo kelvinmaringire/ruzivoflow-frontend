@@ -25,21 +25,16 @@
        </q-card-section>
        <q-card-section>
          <q-form class="q-gutter-md">
-           <q-input label="Username">
-           </q-input>
-           <q-input label="email">
-           </q-input>
-           <q-input label="Password" type="password">
-           </q-input>
-           <q-input label="Confirm Password" type="password">
+           <q-input label="Email">
            </q-input>
            <div>
              <q-btn class="full-width" color="primary" label="register" type="submit" rounded>
              </q-btn>
              <div class="text-center q-mt-sm q-gutter-lg">
                <router-link class="text-white"
-               :to="{ name: 'password_reset'}">Forgot your password?</router-link>
-               <router-link class="text-white" :to="{ name: 'login'}">Login</router-link>
+               :to="{ name: 'login'}">Login</router-link>
+               <router-link class="text-white"
+               :to="{ name: 'register'}">Create account</router-link>
              </div>
            </div>
          </q-form>
