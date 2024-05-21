@@ -22,8 +22,15 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'dashboard', component: () => import('pages/Dashboard/IndexPage.vue') },
-      { path: 'betting', name: 'betting', component: () => import('pages/Dashboard/Betting/IndexPage.vue') },
       { path: 'editor', name: 'editor', component: () => import('pages/Dashboard/Editor/IndexPage.vue') },
+      {
+        path: 'betting',
+        name: 'betting',
+        component: () => import('layouts/BettingLayout.vue'),
+        children: [
+          { path: '', name: 'dashboard', component: () => import('pages/Dashboard/IndexPage.vue') },
+        ],
+      },
     ],
   },
 

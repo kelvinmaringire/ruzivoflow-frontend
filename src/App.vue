@@ -6,9 +6,11 @@
 
 import { useHomePageStore } from './stores/homepage-store';
 import { useAuthStore } from './stores/auth-store';
+import { useBettingTipsStore } from './stores/betting-store';
 
 const homepageStore = useHomePageStore();
 const authStore = useAuthStore();
+const bettingTips = useBettingTipsStore();
 
 defineOptions({
   name: 'App',
@@ -18,6 +20,7 @@ defineOptions({
 async function initStore() {
   await homepageStore.fetchHomePageData();
   await authStore.initAuth();
+  await bettingTips.fetchBettingTips();
 }
 
 // Call the initialization function
