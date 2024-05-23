@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <h1>Editor</h1>
+    <h1>Leagues</h1>
   </q-page>
 </template>
 

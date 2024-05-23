@@ -81,7 +81,7 @@ const menuList = [
     icon: 'sports_soccer',
     label: 'Betting',
     separator: true,
-    path: 'betting',
+    path: 'predictions',
   },
 
   {
@@ -100,3 +100,13 @@ const menuList = [
 ];
 
 </script>
+
+<style>
+
+@media screen and (min-width: 992px) {
+      .column {
+          max-width: 100%;
+      }
+  }
+
+</style>

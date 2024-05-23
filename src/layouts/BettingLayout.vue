@@ -1,20 +1,23 @@
 <template>
-  <q-layout view="hhh lpr lFf">
+  <q-layout view="hhh lpr fFf">
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+<q-header class="bg-dark">
 
-    <q-footer class="bg-grey-8 text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          <div>Title</div>
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
+  <q-tabs
+    dense
+    no-caps
+    inline-label
+    class="bg-primary shadow-2"
+  >
+    <q-route-tab :to="{name: 'predictions'}" icon="mail" label="Predictions" />
+    <q-route-tab :to="{name: 'previews'}" icon="alarm" label="Priviews" />
+    <q-route-tab :to="{name: 'leagues'}" icon="movie" label="Leagues" />
+  </q-tabs>
+</q-header>
 
-  </q-layout>
+<q-page-container>
+  <router-view />
+</q-page-container>
+
+</q-layout>
 </template>

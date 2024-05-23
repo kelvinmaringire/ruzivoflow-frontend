@@ -28,7 +28,9 @@ const routes = [
         name: 'betting',
         component: () => import('layouts/BettingLayout.vue'),
         children: [
-          { path: '', name: 'dashboard', component: () => import('pages/Dashboard/IndexPage.vue') },
+          { path: '', name: 'predictions', component: () => import('pages/Dashboard/Betting/PredictionsPage.vue') },
+          { path: 'previews', name: 'previews', component: () => import('pages/Dashboard/Betting/PreviewsPage.vue') },
+          { path: 'leagues', name: 'leagues', component: () => import('pages/Dashboard/Betting/LeaguesPage.vue') },
         ],
       },
     ],

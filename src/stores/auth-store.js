@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
         this.token = JSON.parse(token);
         this.isAuthenticated = true;
         api.defaults.headers.common.Authorization = `JWT ${this.token.access}`;
-        await this.getMe(this.token);
+        // await this.getMe(this.token);
       } else {
         this.token = '';
         window.localStorage.removeItem('token');
