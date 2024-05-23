@@ -96,28 +96,6 @@
 
           </q-tab-panel>
         </q-tab-panels>
-    <q-table
-      dense
-      title="Predictions"
-      class="my-sticky-header-table my-sticky-column-table"
-      :rows="bettingTipsStore.tomorrow.games"
-      :columns="columns"
-      :filter="filter"
-      :pagination="initialPagination"
-      no-data-label="I didn't find anything for you"
-      row-key="name"
-      style="max-width: 100%;"
-      separator="cell">
-
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
-
-      </q-table>
 
   </q-page>
 </template>
