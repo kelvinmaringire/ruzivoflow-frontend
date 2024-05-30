@@ -105,6 +105,7 @@ module.exports = configure((/* ctx */) => ({
       'Meta',
       'Notify',
       'Loading',
+      'Dialog',
     ],
   },
 

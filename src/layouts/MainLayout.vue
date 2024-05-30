@@ -72,6 +72,8 @@
       <div class="flex flex-center">
       <q-btn outline rounded label="Login" :to="{name: 'login'}"
           class="q-mx-xs" icon="login" v-if="!isAuthenticated" />
+        <q-btn outline rounded label="Dashboard" :to="{name: 'dashboard'}"
+          class="q-mx-xs" icon="login" v-if="isAuthenticated" />
         </div>
     </q-drawer>
 

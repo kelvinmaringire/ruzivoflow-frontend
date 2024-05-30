@@ -9,11 +9,18 @@
           <q-img style="width: 250px" src="../assets/logo/thedatamine.io.png"></q-img>
         </q-toolbar-title>
 
-        <q-btn flat dense color="primary" icon="home" :to="{name: 'homepage'}" class="q-mr-sm">
-        Homepage</q-btn>
+        <q-btn flat dense color="primary" icon="home" :to="{name: 'homepage'}" class="q-mr-xs">
+          <q-tooltip class="bg-primary">
+            Homepage
+          </q-tooltip>
+        </q-btn>
 
         <q-btn flat dense color="negative" icon="power_settings_new"
-         @click="logout()"> Logout</q-btn>
+         @click="logout()">
+          <q-tooltip class="bg-primary">
+              Logout
+            </q-tooltip>
+        </q-btn>
 
       </q-toolbar>
     </q-header>
@@ -26,9 +33,9 @@
               <q-item clickable :active="menuItem.label === 'Dashboard'" v-ripple class="q-my-sm"
               :to="{ name: menuItem.path}">
                 <q-item-section avatar>
-                  <q-icon :name="menuItem.icon" />
+                  <q-icon :name="menuItem.icon"/>
                 </q-item-section>
-                <q-item-section>
+                <q-item-section style="margin-left: -25px;">
                   {{ menuItem.label}}
                 </q-item-section>
               </q-item>
@@ -109,4 +116,7 @@ const menuList = [
       }
   }
 
+.q-toolbar__title {
+    padding: 0 0;
+}
 </style>

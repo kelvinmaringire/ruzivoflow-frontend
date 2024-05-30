@@ -1,36 +1,10 @@
 <template>
-  <q-page padding>
-
-    <q-tabs
-          v-model="tab"
-          dense
-          class="bg-dark shadow-2"
-          style="margin-top: -15px;"
-          active-color="primary"
-          indicator-color="primary"
-          narrow-indicator
-          no-caps
-          inline-label
-              >
-          <q-tab name="yesterday" label="Yesterday" icon="verified_user" />
-          <q-tab name="today" label="Today" icon="today" />
-          <q-tab name="tomorrow" label="Tomorrow" icon="watch_later" />
-        </q-tabs>
-
-        <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="yesterday">
-
-            <pred-yesterday-component></pred-yesterday-component>
-
-          </q-tab-panel>
-
-          <q-tab-panel name="today">
-
+  <div>
             <q-table
               dense
-              title="Predictions (Today)"
+              title="Predictions (Yesterday)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.today.games"
+              :rows="bettingTipsStore.yesterday.games"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -46,47 +20,13 @@
                   </template>
                 </q-input>
               </template>
+
             </q-table>
-
-          </q-tab-panel>
-
-          <q-tab-panel name="tomorrow">
-
-            <q-table
-              dense
-              title="Predictions (Tomorrow)"
-              class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.tomorrow.games"
-              :columns="columns"
-              :filter="filter"
-              :pagination="initialPagination"
-              no-data-label="I didn't find anything for you"
-              row-key="name"
-              style="max-width: 100%;"
-              separator="cell">
-
-              <template v-slot:top-right>
-                <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-              </template>
-            </q-table>
-
-          </q-tab-panel>
-        </q-tab-panels>
-
-  </q-page>
+    </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useBettingTipsStore } from '../../../stores/betting-store';
-import PredYesterdayComponent from '../../../components/Betting/PredYesterdayComponent.vue';
-
-const filter = ref('');
-const tab = ref('today');
+import { useBettingTipsStore } from '../../stores/betting-store';
 
 const bettingTipsStore = useBettingTipsStore();
 
@@ -180,59 +120,5 @@ const columns = [
     name: 'away_draw', label: '2X', field: 'away_draw', align: 'left', sortable: true,
   },
 ];
+
 </script>
-
-<style lang="sass">
-.my-sticky-header-table
-  /* height or max-height is important */
-  height: 100%
-
-  .q-table__top,
-  .q-table__bottom,
-  thead tr:first-child th
-    /* bg color is important for th; just specify one */
-    background-color: #1976D2
-
-  thead tr th
-    position: sticky
-    z-index: 1
-  thead tr:first-child th
-    top: 0
-
-  /* this is when the loading indicator appears */
-  &.q-table--loading thead tr:last-child th
-    /* height of all previous header rows */
-    top: 48px
-
-  /* prevent scrolling behind sticky top row on focus */
-  tbody
-    /* height of all previous header rows */
-    scroll-margin-top: 48px
-
-.my-sticky-column-table
-  /* specifying max-width so the example can
-    highlight the sticky column on any browser window */
-  max-width: 600px
-
-  thead tr:nth-child(2) th:nth-child(2),
-  thead tr:nth-child(3) th:nth-child(3)
-    /* bg color is important for th; just specify one */
-    background-color: #1976D2
-
-  td:nth-child(2),
-  td:nth-child(3)
-    background-color: #1976D2
-
-  th:nth-child(2),
-  td:nth-child(2)
-    position: sticky
-    left: 0
-    z-index: 1
-
-  th:nth-child(3),
-  td:nth-child(3)
-    position: sticky
-    left: calc(100px + 50px)
-    z-index: 1
-
-</style>
