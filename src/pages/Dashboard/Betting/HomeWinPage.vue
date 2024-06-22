@@ -22,9 +22,9 @@
 
             <q-table
               dense
-              title="Predictions (Yesterday)"
+              title="Home Win (Yesterday)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.yesterday.games"
+              :rows="bettingTipsStore.yesterday_home_win"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -49,9 +49,9 @@
 
             <q-table
               dense
-              title="Predictions (Today)"
+              title="Home Win (Today)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.today.games"
+              :rows="bettingTipsStore.today_home_win"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -75,9 +75,9 @@
 
             <q-table
               dense
-              title="Predictions (Tomorrow)"
+              title="Home Win (Tomorrow)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.tomorrow.games"
+              :rows="bettingTipsStore.tomorrow_home_win"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"

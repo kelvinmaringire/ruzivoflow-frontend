@@ -22,9 +22,9 @@
 
             <q-table
               dense
-              title="Predictions (Yesterday)"
+              title="Under 3.5 (Yesterday)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.yesterday.games"
+              :rows="bettingTipsStore.yesterday_under35"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -49,9 +49,9 @@
 
             <q-table
               dense
-              title="Predictions (Today)"
+              title="Under 3.5 (Today)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.today.games"
+              :rows="bettingTipsStore.today_under35"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -75,9 +75,9 @@
 
             <q-table
               dense
-              title="Predictions (Tomorrow)"
+              title="Under 3.5 (Tomorrow)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.tomorrow.games"
+              :rows="bettingTipsStore.tomorrow_under35"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"

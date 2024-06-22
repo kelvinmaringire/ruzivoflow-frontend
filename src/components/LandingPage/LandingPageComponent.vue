@@ -24,11 +24,58 @@
 
             </div>
 
+            <div class="row">
+
+            <div class="col-12 col-md">
+
+              <div class="q-pa-md">
+                <q-card
+                  class="my-card"
+                >
+                <div class="flex flex-center text-h5 q-my-sm">
+                  <a href="https://yozriner.com/" class="text-info" target="_blank">Yozriner</a>
+                </div>
+                <iframe src="https://yozriner.com/" width="100%" height="500"></iframe>
+                </q-card>
+              </div>
+
+            </div>
+
+            <div class="col-12 col-md">
+
+            <div class="q-pa-md">
+              <q-card class="my-card">
+                <div class="flex flex-center text-h5 q-my-sm">
+                  <a href="https://nattiesbeautycreations.com/" class="text-info" target="_blank">Natties Beauty Creations</a>
+                </div>
+                <iframe src="https://nattiesbeautycreations.com/" width="100%" height="500"></iframe>
+
+              </q-card>
+            </div>
+
+            </div>
+
+            <div class="col-12 col-md">
+
+            <div class="q-pa-md">
+              <q-card class="my-card">
+                <div class="flex flex-center text-h5 q-my-sm">
+                  <a href="https://whalebergmotor.thedatamine.io/" class="text-info" target="_blank">Whaleberg Motor</a>
+                </div>
+                <iframe src="https://whalebergmotor.thedatamine.io/" width="100%" height="500"></iframe>
+              </q-card>
+            </div>
+
+            </div>
+
+            </div>
+
           </q-card>
   </div>
 
       </div>
     </div>
+
 </template>
 
 <script setup>

@@ -22,9 +22,9 @@
 
             <q-table
               dense
-              title="Predictions (Yesterday)"
+              title="Away or Draw (Yesterday)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.yesterday.games"
+              :rows="bettingTipsStore.yesterday_away_draw"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -49,9 +49,9 @@
 
             <q-table
               dense
-              title="Predictions (Today)"
+              title="Away or Draw (Today)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.today.games"
+              :rows="bettingTipsStore.today_away_draw"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"
@@ -75,9 +75,9 @@
 
             <q-table
               dense
-              title="Predictions (Tomorrow)"
+              title="Away or Draw (Tomorrow)"
               class="my-sticky-header-table my-sticky-column-table"
-              :rows="bettingTipsStore.tomorrow.games"
+              :rows="bettingTipsStore.tomorrow_away_draw"
               :columns="columns"
               :filter="filter"
               :pagination="initialPagination"

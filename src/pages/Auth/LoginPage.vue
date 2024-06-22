@@ -27,7 +27,15 @@
           <q-form class="q-gutter-md"  @submit.prevent="onLogin">
             <q-input label="Username" v-model="credentials.username">
             </q-input>
-            <q-input label="Password" type="password" v-model="credentials.password">
+            <q-input
+            label="Password" :type="isPwd ? 'password' : 'text'" v-model="credentials.password">
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
             </q-input>
             <div>
               <q-btn class="full-width" color="primary" label="Login" type="submit" rounded></q-btn>
@@ -61,6 +69,7 @@ const authStore = useAuthStore();
 const router = useRouter();
 const $q = useQuasar();
 
+const isPwd = ref(true);
 const credentials = ref({
   username: '',
   password: '',

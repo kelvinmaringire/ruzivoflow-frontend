@@ -21,6 +21,7 @@ async function initStore() {
   await homepageStore.fetchHomePageData();
   await authStore.initAuth();
   await bettingTips.fetchBettingTips();
+  await bettingTips.fetchBettingStats();
 }
 
 // Call the initialization function
