@@ -106,7 +106,7 @@ import { ref } from 'vue';
 import { useBettingTipsStore } from '../../../stores/betting-store';
 
 const filter = ref('');
-const tab = ref('today');
+const tab = ref('tomorrow');
 
 const bettingTipsStore = useBettingTipsStore();
 
