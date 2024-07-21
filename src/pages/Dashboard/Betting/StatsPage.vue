@@ -62,7 +62,7 @@
             class="my-card"
           >
             <q-card-section>
-              <div class="text-h6 flex flex-center text-info">Over 2.5</div>
+              <div class="text-h6 flex flex-center text-info">Over 1.5</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
@@ -93,7 +93,7 @@
             class="my-card"
           >
             <q-card-section>
-              <div class="text-h6 flex flex-center text-info">Under 2.5</div>
+              <div class="text-h6 flex flex-center text-info">Under 3.5</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
@@ -147,7 +147,7 @@
             class="my-card"
           >
             <q-card-section>
-              <div class="text-h6 flex flex-center text-info">Home Over 1.5</div>
+              <div class="text-h6 flex flex-center text-info">Home Over 0.5</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
@@ -178,7 +178,7 @@
           class="my-card"
         >
           <q-card-section>
-            <div class="text-h6 flex flex-center text-info">Away Over 1.5</div>
+            <div class="text-h6 flex flex-center text-info">Away Over 0.5</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">

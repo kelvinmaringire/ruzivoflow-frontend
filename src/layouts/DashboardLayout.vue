@@ -25,7 +25,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" :width="200" side="left">
+    <q-drawer show-if-above v-model="leftDrawerOpen" :width="180" side="left">
 
           <q-list class="q-mt-lg">
 
@@ -88,7 +88,7 @@ const menuList = [
     icon: 'sports_soccer',
     label: 'Betting',
     separator: true,
-    path: 'predictions',
+    path: 'thedatabet',
   },
 
   {
@@ -109,6 +109,11 @@ const menuList = [
 </script>
 
 <style>
+
+.column {
+    flex: 0 50%;
+    max-width: 100%;
+}
 
 @media screen and (min-width: 992px) {
       .column {

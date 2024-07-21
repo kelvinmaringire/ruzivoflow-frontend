@@ -23,12 +23,13 @@ const routes = [
     children: [
       { path: '', name: 'dashboard', component: () => import('pages/Dashboard/IndexPage.vue') },
       { path: 'editor', name: 'editor', component: () => import('pages/Dashboard/Editor/IndexPage.vue') },
+      { path: 'thedatabet', name: 'thedatabet', component: () => import('pages/Dashboard/thedatabet/IndexPage.vue') },
       {
         path: 'betting',
         name: 'betting',
         component: () => import('layouts/BettingLayout.vue'),
         children: [
-          { path: '', name: 'predictions', component: () => import('pages/Dashboard/Betting/PredictionsPage.vue') },
+          { path: '', name: 'predictions', component: () => import('pages/Dashboard/Betting/PredictionsPage1.vue') },
           { path: 'stats', name: 'stats', component: () => import('pages/Dashboard/Betting/StatsPage.vue') },
           { path: 'home_win', name: 'home_win', component: () => import('pages/Dashboard/Betting/HomeWinPage.vue') },
           { path: 'away_win', name: 'away_win', component: () => import('pages/Dashboard/Betting/AwayWinPage.vue') },
