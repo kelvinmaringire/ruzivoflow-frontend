@@ -72,26 +72,26 @@ function logout() {
 }
 
 const menuList = [
-  {
+  /* {
     icon: 'dashboard',
     label: 'Dashboard',
     separator: true,
     path: 'dashboard',
-  },
+  }, */
   {
     icon: 'insights',
-    label: 'Editor',
+    label: 'thedataeditor',
     separator: false,
     path: 'editor',
   },
   {
     icon: 'sports_soccer',
-    label: 'Betting',
+    label: 'thedatabet',
     separator: true,
-    path: 'thedatabet',
+    path: 'predictions',
   },
 
-  {
+  /* {
     icon: 'school',
     iconColor: 'primary',
     label: 'Knowledge',
@@ -103,20 +103,16 @@ const menuList = [
     label: 'Profile',
     separator: false,
     path: 'dashboard',
-  },
+  }, */
 ];
 
 </script>
 
 <style>
 
-.column {
-    flex: 0 50%;
-    max-width: 100%;
-}
-
 @media screen and (min-width: 992px) {
       .column {
+          flex: 100%;
           max-width: 100%;
       }
   }

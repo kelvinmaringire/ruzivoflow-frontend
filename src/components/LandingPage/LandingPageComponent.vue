@@ -32,10 +32,9 @@
                 <q-card
                   class="my-card"
                 >
-                <div class="flex flex-center text-h5 q-my-sm">
-                  <a href="https://yozriner.com/" class="text-info" target="_blank">Yozriner</a>
-                </div>
-                <iframe src="https://yozriner.com/" width="100%" height="500"></iframe>
+                <a href="https://yozriner.com/" class="text-info" target="_blank">
+                  <q-img src="../../assets/landing_page/yozriner.png" :ratio="16/9"/>
+                </a>
                 </q-card>
               </div>
 
@@ -45,10 +44,9 @@
 
             <div class="q-pa-md">
               <q-card class="my-card">
-                <div class="flex flex-center text-h5 q-my-sm">
-                  <a href="https://nattiesbeautycreations.com/" class="text-info" target="_blank">Natties Beauty Creations</a>
-                </div>
-                <iframe src="https://nattiesbeautycreations.com/" width="100%" height="500"></iframe>
+                <a href="https://nattiesbeautycreations.com/" class="text-info" target="_blank">
+                  <q-img src="../../assets/landing_page/nattiesbeautycreations.png" :ratio="16/9"/>
+                </a>
 
               </q-card>
             </div>
@@ -59,10 +57,9 @@
 
             <div class="q-pa-md">
               <q-card class="my-card">
-                <div class="flex flex-center text-h5 q-my-sm">
-                  <a href="https://whalebergmotor.thedatamine.io/" class="text-info" target="_blank">Whaleberg Motor</a>
-                </div>
-                <iframe src="https://whalebergmotor.thedatamine.io/" width="100%" height="500"></iframe>
+                <a href="https://whalebergmotor.thedatamine.io/" class="text-info" target="_blank">
+                  <q-img src="../../assets/landing_page/whalebergmotors.png" :ratio="16/9"/>
+                </a>
               </q-card>
             </div>
 

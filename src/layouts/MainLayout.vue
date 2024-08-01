@@ -28,10 +28,10 @@
 
           <!-- Register Button (Hidden for now) -->
           <q-btn outline rounded label="Register" class="q-mx-xs"
-           :to="{name: 'register'}" icon="person_add"  v-if="!isAuthenticated" />
+           :to="{name: 'register'}" icon="person_add"  v-if="false" />
 
            <q-btn outline rounded label="Dashboard" class="q-mx-xs"
-           :to="{name: 'dashboard'}" icon="dashboard" v-if="isAuthenticated" />
+           :to="{name: 'predictions'}" icon="dashboard" v-if="isAuthenticated" />
         </div>
 
         <div class="lt-md">
@@ -72,7 +72,7 @@
       <div class="flex flex-center">
       <q-btn outline rounded label="Login" :to="{name: 'login'}"
           class="q-mx-xs" icon="login" v-if="!isAuthenticated" />
-        <q-btn outline rounded label="Dashboard" :to="{name: 'dashboard'}"
+        <q-btn outline rounded label="Dashboard" :to="{name: 'predictions'}"
           class="q-mx-xs" icon="login" v-if="isAuthenticated" />
         </div>
     </q-drawer>
