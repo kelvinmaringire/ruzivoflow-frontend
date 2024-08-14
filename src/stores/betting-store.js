@@ -37,7 +37,10 @@ export const useBettingTipsStore = defineStore('betting', {
       return state.betting_stats.find((stat) => stat.date === formattedYesterdayDate) || {};
     },
     tomorrow_betway_odds(state) {
-      return state.betway_odds.find((stat) => stat.date === '2024-07-30') || {};
+      const currentDate = new Date();
+      const tomorrowDate = new Date(currentDate.getTime() + 86400000);
+      const formattedTomorrowDate = tomorrowDate.toISOString().slice(0, 10);
+      return state.betway_odds.find((stat) => stat.date === formattedTomorrowDate) || { odds: [] };
     },
   },
 

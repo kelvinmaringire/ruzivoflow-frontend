@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-
 import { useHomePageStore } from './stores/homepage-store';
 import { useAuthStore } from './stores/auth-store';
 import { useBettingTipsStore } from './stores/betting-store';

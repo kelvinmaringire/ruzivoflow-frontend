@@ -21,7 +21,8 @@
           :class="{ 'active': activeTab === 'landing-page' }" @click="scrollTo('landing-page')" />
 
           <!-- Contact Button (Hidden for now) -->
-          <q-btn flat rounded label="Contact" class="q-mr-sm" v-if="false" />
+          <q-btn flat rounded label="Contact" class="q-mr-sm"
+          :class="{ 'active': activeTab === 'contact' }" @click="scrollTo('contact')" />
 
           <q-btn outline rounded label="Login" :to="{name: 'login'}"
           class="q-mx-xs" icon="login" v-if="!isAuthenticated" />
@@ -53,27 +54,43 @@
         <!-- Home Link -->
         <q-item clickable v-ripple tag="a" href="#hero"
         :class="{ 'active': activeTab === 'hero' }" class="q-my-sm">
-          <q-item-section><q-item-label>Home</q-item-label></q-item-section>
+          <q-item-section class="flex flex-center">
+          <q-item-label class="text-h6">Home</q-item-label>
+          </q-item-section>
         </q-item>
 
         <!-- Services Link -->
         <q-item clickable v-ripple tag="a" href="#services"
         :class="{ 'active': activeTab === 'services' }" class="q-my-sm">
-          <q-item-section><q-item-label>Services</q-item-label></q-item-section>
+          <q-item-section class="flex flex-center">
+          <q-item-label class="text-h6">Services</q-item-label>
+          </q-item-section>
         </q-item>
 
         <!-- Landing Page Link -->
         <q-item clickable v-ripple tag="a" href="#landing-page"
         :class="{ 'active': activeTab === 'landing-page' }" class="q-my-sm">
-          <q-item-section><q-item-label>Website</q-item-label></q-item-section>
+          <q-item-section class="flex flex-center">
+          <q-item-label class="text-h6">Website</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Contact Link -->
+        <q-item clickable v-ripple tag="a" href="#contact"
+        :class="{ 'active': activeTab === 'contact' }" class="q-my-sm">
+          <q-item-section class="flex flex-center">
+          <q-item-label class="text-h6">Contact</q-item-label>
+          </q-item-section>
         </q-item>
       </q-list>
 
-      <div class="flex flex-center">
+      <q-separator />
+
+      <div class="flex flex-center q-mt-md">
       <q-btn outline rounded label="Login" :to="{name: 'login'}"
           class="q-mx-xs" icon="login" v-if="!isAuthenticated" />
         <q-btn outline rounded label="Dashboard" :to="{name: 'predictions'}"
-          class="q-mx-xs" icon="login" v-if="isAuthenticated" />
+          class="q-mx-xs" icon="dashboard" v-if="isAuthenticated" />
         </div>
     </q-drawer>
 

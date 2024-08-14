@@ -108,14 +108,7 @@ const menuList = [
 
 </script>
 
-<style>
-
-@media screen and (min-width: 992px) {
-      .column {
-          flex: 100%;
-          max-width: 100%;
-      }
-  }
+<style scoped>
 
 .q-toolbar__title {
     padding: 0 0;

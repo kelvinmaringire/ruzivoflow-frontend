@@ -193,7 +193,7 @@ const options = [
 ];
 const searchQuery = ref('');
 const currentPage = ref(1);
-const itemsPerPage = ref(20);
+const itemsPerPage = ref(9);
 const selectedGame = ref(null);
 
 const filterCriteria = {

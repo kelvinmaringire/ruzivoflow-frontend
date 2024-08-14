@@ -25,6 +25,10 @@ export const useAuthStore = defineStore('auth', {
       this.getMe(response.data);
     },
 
+    async doContact(formData) {
+      await api.post('contact_form/', formData);
+    },
+
     logout() {
       api.defaults.headers.common.Authorization = '';
       this.token = '';

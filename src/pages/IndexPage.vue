@@ -7,6 +7,8 @@
 
     <LandingPageComponent></LandingPageComponent>
 
+    <ContactUsComponent></ContactUsComponent>
+
   </q-page>
 </template>
 
@@ -15,6 +17,7 @@
 import HeroComponent from 'components/LandingPage/HeroComponent.vue';
 import ServicesComponent from 'components/LandingPage/ServicesComponent.vue';
 import LandingPageComponent from 'components/LandingPage/LandingPageComponent.vue';
+import ContactUsComponent from 'components/LandingPage/ContactUsComponent.vue';
 
 defineOptions({
   name: 'IndexPage',

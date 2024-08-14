@@ -32,7 +32,7 @@ const { homepage } = storeToRefs(homePageStore);
 
 </script>
 
-<style>
+<style scoped>
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -46,7 +46,7 @@ const { homepage } = storeToRefs(homePageStore);
   width: 100%;
   height: 100%;
   padding: 2em 1.5em;
-  background: linear-gradient(#ffffff 50%, #ff9800 50%);
+  background: linear-gradient(#1d1d1d 50%, #ff9800 50%);
   background-size: 100% 200%;
   background-position: 0 2.5%;
   border-radius: 50px;
