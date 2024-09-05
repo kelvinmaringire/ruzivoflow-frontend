@@ -46,6 +46,6 @@ import PredictionsTomorrowComponent from 'components/thedatabet/PredictionsTomor
 import PredictionsTodayComponent from 'components/thedatabet/PredictionsTodayComponent.vue';
 import PredictionsYesterdayComponent from 'components/thedatabet/PredictionsYesterdayComponent.vue';
 
-const tab = ref('tomorrow');
+const tab = ref('today');
 
 </script>

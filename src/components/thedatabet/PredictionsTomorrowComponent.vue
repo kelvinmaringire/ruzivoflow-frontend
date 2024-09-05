@@ -27,13 +27,14 @@
       </div>
     </div>
     <q-list bordered separator>
-      <q-item v-for="(game, key) in paginatedGames" :key="key">
-        <div class="col-md-2 col-sm-3 text-weight-bold">
+      <q-item v-for="(game, key) in paginatedGames" :key="key" class="custom-item">
+        <div class="row q-col-gutter-xs">
+        <div class="col-12 col-md-2 text-weight-bold">
           <q-item-section>
             <q-item-label>{{ game.DATE_BAH }}</q-item-label>
           </q-item-section>
         </div>
-        <div class="col-md-6 col-sm-9">
+        <div class="col-12 col-md-6">
           <q-item-section>
             <q-item-label>
               <q-badge text-color="black" color="info" :label="game.Predicted_Host_SC" />
@@ -43,12 +44,12 @@
             </q-item-label>
           </q-item-section>
         </div>
-        <div class="col-md-3 col-sm-8 text-weight-bold">
+        <div class="col-10 col-md-3 text-weight-bold">
           <q-item-section>
             <q-item-label>{{ game.country }} - {{ game.league }}</q-item-label>
           </q-item-section>
         </div>
-        <div class="col-md-1 col-sm-4 text-weight-bold">
+        <div class="col-2 col-md-1 text-weight-bold">
           <q-item-section>
             <q-item-label>
               <q-btn
@@ -63,6 +64,7 @@
             </q-item-label>
           </q-item-section>
         </div>
+      </div>
       </q-item>
     </q-list>
     <div class="flex flex-center q-my-md">
@@ -272,3 +274,12 @@ function copyName(teamName) {
     });
 }
 </script>
+
+<style>
+
+.custom-item {
+  display: block; /* Override the row class */
+  /* Add any other styles you need */
+}
+
+</style>

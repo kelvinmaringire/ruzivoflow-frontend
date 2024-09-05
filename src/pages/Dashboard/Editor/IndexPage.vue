@@ -1,34 +1,165 @@
 <template>
-  <q-page padding>
-    <div
-      class="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan"
-      id="canvas"
-    >
-      <div
-        id="upload"
-        style="left: 50px; top: 100px;"
-        class="window jtk-node"
-      >
-        <img
-          class="node-icon"
-          src="../../../assets/thedataeditor/upload.png"
-        />
-        <span class="node-title">File Upload</span>
-      </div>
+  <q-page>
+    <div class="row">
+      <div class="col-md-3">
+        <q-list bordered class="rounded-borders bg-dark flowchart-demo">
+          <q-expansion-item expand-separator icon="insights" label="Data">
+            <q-card>
+              <q-card-section>
+                <div class="row q-mb-lg">
+                  <div class="col-3">
+                    <div
+                      id="csv"
+                      class="window jtk-node relative"
+                      draggable="true"
+                      @dragstart="onDragStart($event)"
+                    >
+                      <img
+                        ondragstart="event.preventDefault();"
+                        draggable="false"
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/csv.png"
+                      />
+                      <span class="node-title">Read CSV</span>
+                    </div>
+                  </div>
 
-      <div
-        id="save_file"
-        style="left: 90px; top: 150px;"
-        class="window jtk-node"
-      >
-        <img
-          class="node-icon"
-          src="../../../assets/thedataeditor/diskette.png"
-        />
-        <span class="node-title">Save File</span>
+                  <div class="col-3">
+                    <div id="json" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/json.png"
+                      />
+                      <span class="node-title">Read JSON</span>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="excel" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/excel.png"
+                      />
+                      <span class="node-title">Read Excel</span>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="api" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/api.png"
+                      />
+                      <span class="node-title">Get API</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row q-mb-lg">
+                  <div class="col-3">
+                    <div id="columns" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/choice.png"
+                      />
+                      <span class="node-title">Select Columns</span>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="filter1" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/filter.png"
+                      />
+                      <span class="node-title">Filter</span>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="cleaning" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/cleaning.png"
+                      />
+                      <span class="node-title">Data Cleaning</span>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="aggregation" class="window jtk-node relative">
+                      <img
+                        class="node-icon"
+                        src="../../../assets/thedataeditor/aggregation.png"
+                      />
+                      <span class="node-title">Aggregation</span>
+                    </div>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item expand-separator icon="bar_chart" label="Visualization">
+            <q-card>
+              <q-card-section> </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="psychology"
+            label="Machine Learning"
+            header-class="text-purple"
+          >
+            <q-card>
+              <q-card-section> </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item icon="miscellaneous_services" label="Miscellaneous" disable>
+            <q-card>
+              <q-card-section> </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </q-list>
+      </div>
+      <div class="col-md-9">
+        <div
+          @dragover="onDragOver($event)"
+          @drop="onDrop($event)"
+          class="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan"
+          id="canvas"
+        >
+          <div
+            id="upload"
+            style="left: 50px; top: 100px"
+            class="window jtk-node absolute"
+          >
+            <img class="node-icon" src="../../../assets/thedataeditor/upload.png" />
+            <span class="node-title">File Upload</span>
+          </div>
+
+          <div
+            id="filter"
+            style="left: 150px; top: 300px"
+            class="window jtk-node absolute"
+          >
+            <img class="node-icon" src="../../../assets/thedataeditor/filter.png" />
+            <span class="node-title">Filter</span>
+          </div>
+
+          <div
+            id="save_file"
+            style="left: 90px; top: 150px"
+            class="window jtk-node absolute"
+          >
+            <img class="node-icon" src="../../../assets/thedataeditor/diskette.png" />
+            <span class="node-title">Save File</span>
+          </div>
+        </div>
       </div>
     </div>
-
   </q-page>
 </template>
 
@@ -41,58 +172,62 @@ onMounted(() => {
 
   const instance = newInstance({
     container,
-    PaintStyle: {
-      strokeWidth: 3,
-      stroke: '#ff9800',
-      outlineStroke: 'white',
-      outlineWidth: 1,
+    endpoint: 'Dot',
+    connector: 'Bezier',
+    maxConnections: 3,
+    dragOptions: {
+      containment: 'parentEnclosed',
     },
-    // default drag options
-    DragOptions: { cursor: 'pointer', zIndex: 2000 },
-    // the overlays to decorate each connection with
-    ConnectionOverlays: [
-      [
-        'Arrow',
-        {
-          location: 1,
-          visible: true,
-          width: 11,
-          length: 11,
-          id: 'ARROW',
-          events: {
-            click() {
-              alert('you clicked on the arrow overlay');
-            },
-          },
-        },
-      ],
-      [
-        'Label',
-        {
-          location: 0.5,
-          id: 'label',
-          cssClass: 'aLabel',
-          events: {
-            tap() {
-              alert('hey');
-            },
-          },
-        },
-      ],
-    ],
+    endpointStyle: { fill: '#ff9800' },
+    paintStyle: { strokeWidth: 3, stroke: '#ff9800' },
   });
 
+  instance.setSuspendDrawing(true);
   const upload = document.getElementById('upload');
   const saveFile = document.getElementById('save_file');
+  const filter = document.getElementById('filter');
 
-  instance.addEndpoint(upload, { endpoint: 'Dot' });
-  instance.addEndpoint(saveFile, { endpoint: 'Dot' });
+  instance.addEndpoint(upload, {
+    anchors: 'Right',
+    source: true,
+  });
+  instance.addEndpoint(saveFile, {
+    anchors: 'Left',
+    target: true,
+  });
+
+  instance.addEndpoint(filter, {
+    anchors: 'Left',
+    target: true,
+  });
+
+  instance.addEndpoint(filter, {
+    anchors: 'Right',
+    source: true,
+  });
 
   instance.connect({
     source: upload,
     target: saveFile,
+    anchors: ['Right', 'Left'],
+    connector: 'Bezier',
   });
+
+  instance.setSuspendDrawing(false, true);
 });
+
+function onDragStart(event) {
+  event.dataTransfer.setData('text/plain', event.target.id);
+}
+
+function onDragOver(event) {
+  event.preventDefault();
+}
+
+function onDrop(event) {
+  const OriginalId = event.dataTransfer.getData('text');
+  console.log(OriginalId);
+}
 </script>
 
 <style>
@@ -139,7 +274,6 @@ onMounted(() => {
   cursor: pointer;
   text-align: center;
   z-index: 20;
-  position: absolute;
   background-color: #ffffff;
   color: black;
   font-family: helvetica, sans-serif;
@@ -149,6 +283,16 @@ onMounted(() => {
   -moz-transition: -moz-box-shadow 0.15s ease-in;
   -o-transition: -o-box-shadow 0.15s ease-in;
   transition: box-shadow 0.15s ease-in;
+}
+
+/* Relative positioning */
+.flowchart-demo .window.relative {
+  position: relative;
+}
+
+/* Absolute positioning */
+.flowchart-demo .window.absolute {
+  position: absolute;
 }
 
 .flowchart-demo .window:hover {
