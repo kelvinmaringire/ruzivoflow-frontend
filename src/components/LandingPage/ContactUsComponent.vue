@@ -13,7 +13,7 @@
        </q-card-section>
        <q-card-section>
        </q-card-section>
-       <q-card-sectiog>
+       <q-card-section>
          <q-form class="q-gutter-md q-pa-lg" @submit.prevent="onContact">
            <q-input label="Fullname" v-model="contactForm.fullname">
            </q-input>
@@ -27,7 +27,7 @@
              </q-btn>
            </div>
          </q-form>
-       </q-card-sectiog>
+       </q-card-section>
      </q-card>
 
       </div>

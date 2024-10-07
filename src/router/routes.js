@@ -22,7 +22,8 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'dashboard', component: () => import('pages/Dashboard/IndexPage.vue') },
-      { path: 'editor', name: 'editor', component: () => import('pages/Dashboard/Editor/IndexPage.vue') },
+      { path: 'editor', name: 'workflows', component: () => import('pages/Dashboard/Editor/WorkFlows.vue') },
+      { path: 'editor/:id', name: 'editor', component: () => import('pages/Dashboard/Editor/NodeEditor.vue') },
       {
         path: 'thedatabet',
         name: 'thedatabet',

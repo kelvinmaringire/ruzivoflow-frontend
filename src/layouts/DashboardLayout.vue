@@ -27,7 +27,7 @@
 
     <q-drawer show-if-above v-model="leftDrawerOpen" :width="180" side="left">
 
-          <q-list class="q-mt-lg">
+          <q-list class="q-mt-xl">
 
             <template v-for="(menuItem, index) in menuList" :key="index">
               <q-item clickable :active="menuItem.label === 'Dashboard'" v-ripple class="q-my-sm"
@@ -72,17 +72,17 @@ function logout() {
 }
 
 const menuList = [
-  /* {
+  {
     icon: 'dashboard',
     label: 'Dashboard',
     separator: true,
     path: 'dashboard',
-  }, */
+  },
   {
     icon: 'insights',
     label: 'thedataeditor',
     separator: false,
-    path: 'editor',
+    path: 'workflows',
   },
   {
     icon: 'sports_soccer',
@@ -91,7 +91,7 @@ const menuList = [
     path: 'predictions',
   },
 
-  /* {
+  {
     icon: 'school',
     iconColor: 'primary',
     label: 'Knowledge',
@@ -103,7 +103,7 @@ const menuList = [
     label: 'Profile',
     separator: false,
     path: 'dashboard',
-  }, */
+  },
 ];
 
 </script>

@@ -9,7 +9,6 @@
           dense
           v-model="searchQuery"
           label="Search"
-          size="sm"
           style="max-width: 300px"
         />
       </div>
