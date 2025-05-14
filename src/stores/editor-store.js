@@ -66,6 +66,24 @@ export const useEditorStore = defineStore('editor', {
       const response = await api.get('thedataeditor/node_item/');
       this.node_items = response.data;
     },
+    async editNodeItemFormData(nodeItem) {
+      const response = await api.put(`thedataeditor/node_item/form_data/${nodeItem.id}/`, nodeItem);
+      const editedNodeItem = this.node_items.find((nd) => nd.id === nodeItem.id);
+      const index = this.node_items.indexOf(editedNodeItem);
+      this.node_items[index] = response.data;
+    },
+    async editNodeItem(nodeItem) {
+      const response = await api.put(`thedataeditor/node_item/${nodeItem.id}/`, nodeItem);
+      const editedNodeItem = this.node_items.find((nd) => nd.id === nodeItem.id);
+      const index = this.node_items.indexOf(editedNodeItem);
+      this.node_items[index] = response.data;
+    },
+    async deleteNodeItem(nodeItem) {
+      await api.delete(`thedataeditor/node_item/${nodeItem.id}/`);
+      const deletedNodeItem = this.node_items.find((nd) => nd.id === nodeItem.id);
+      const index = this.node_items.indexOf(deletedNodeItem);
+      this.node_items.splice(index, 1);
+    },
     async fetchConnections() {
       const response = await api.get('thedataeditor/connection/');
       this.connections = response.data;

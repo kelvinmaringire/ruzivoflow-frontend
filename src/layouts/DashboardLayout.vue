@@ -80,17 +80,15 @@ const menuList = [
   },
   {
     icon: 'insights',
-    label: 'thedataeditor',
-    separator: false,
+    label: 'Ruzivoflow',
     path: 'workflows',
   },
   {
-    icon: 'sports_soccer',
-    label: 'thedatabet',
+    icon: 'folder',
+    label: 'Files',
     separator: true,
-    path: 'predictions',
+    path: 'files',
   },
-
   {
     icon: 'school',
     iconColor: 'primary',

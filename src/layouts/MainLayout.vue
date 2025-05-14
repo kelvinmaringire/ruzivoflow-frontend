@@ -4,7 +4,7 @@
     <q-header class="bg-dark">
       <q-toolbar>
         <q-toolbar-title @click="scrollTo('hero')">
-          <q-img style="width: 300px" src="../assets/logo/thedatamine.io.png"></q-img>
+          <q-img style="width: 300px" src="../assets/logo/logo.png"></q-img>
         </q-toolbar-title>
 
         <div class="gt-sm">
@@ -32,7 +32,7 @@
            :to="{name: 'register'}" icon="person_add"  v-if="false" />
 
            <q-btn outline rounded label="Dashboard" class="q-mx-xs"
-           :to="{name: 'predictions'}" icon="dashboard" v-if="isAuthenticated" />
+           :to="{name: 'dashboard'}" icon="dashboard" v-if="isAuthenticated" />
         </div>
 
         <div class="lt-md">

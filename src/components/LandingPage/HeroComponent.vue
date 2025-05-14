@@ -3,17 +3,17 @@
     <div class="row bg-dark" id="hero-section">
 
       <div class="col">
-        <div style="max-width: 650px; margin-left: auto; margin-right: auto; display:block">
-        <h1 class="hero-title q-mt-xl q-pt-xl q-px-lg">
-        {{ homepage.heroTitle }}</h1>
-        <div class="text-h6 text-weight-light q-px-lg q-pb-sm" v-html="homepage.heroSubtitle">
+          <div style="max-width: 650px; margin-left: auto; margin-right: auto; display:block">
+          <div class="hero-title text-h6 q-mt-md q-px-lg q-py-xl " style="line-height: 1" >
+          {{ homepage.heroTitle }}</div>
+          <div class="text-h6 text-weight-light q-px-lg q-pb-sm" v-html="homepage.heroSubtitle">
+          </div>
+          <q-btn class="glossy q-ml-lg q-my-md" rounded outline color="primary"
+          :label="homepage.heroOutlineButtonTitle" :href="homepage.heroOutlineButtonHref"/>
+          <q-btn class="q-ml-sm q-my-lg" flat color="primary"
+          :label="homepage.heroFlatButtonTitle" :href="homepage.heroFlatButtonHref"/>
         </div>
-        <q-btn class="glossy q-ml-lg q-my-lg" rounded outline color="primary"
-        :label="homepage.heroOutlineButtonTitle" :href="homepage.heroOutlineButtonHref"/>
-        <q-btn class="q-ml-sm q-my-lg" flat color="primary"
-        :label="homepage.heroFlatButtonTitle" :href="homepage.heroFlatButtonHref"/>
       </div>
-    </div>
       <div class="col gt-sm q-mt-md">
         <q-img v-if="homepage.heroImage"
         :src="homepage.heroImage.image"
@@ -47,8 +47,8 @@ const { homepage } = storeToRefs(homePageStore);
 <style>
 
 .hero-title {
-  font-size: 70px;
-  font-weight: 600;
+  font-size: 50px;
+  font-weight: 500;
   background-image: linear-gradient(to bottom, #FF9800, #e3dcd3);
   color: transparent;
   background-clip: text;

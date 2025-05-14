@@ -5,12 +5,10 @@
 <script setup>
 import { useHomePageStore } from './stores/homepage-store';
 import { useAuthStore } from './stores/auth-store';
-import { useBettingTipsStore } from './stores/betting-store';
 import { useEditorStore } from './stores/editor-store';
 
 const homepageStore = useHomePageStore();
 const authStore = useAuthStore();
-const bettingTips = useBettingTipsStore();
 const editorStore = useEditorStore();
 
 defineOptions({
@@ -23,10 +21,6 @@ async function initStore() {
 
   await authStore.initAuth();
   await authStore.fetchUsers();
-
-  await bettingTips.fetchBettingTips();
-  await bettingTips.fetchBettingStats();
-  await bettingTips.fetchBetwayOdds();
 
   await editorStore.fetchNodeCategories();
   await editorStore.fetchNodes();

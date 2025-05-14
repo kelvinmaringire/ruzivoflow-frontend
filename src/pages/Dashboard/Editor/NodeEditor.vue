@@ -60,6 +60,8 @@
             :key="index"
             :id="node_item.html_id"
             :style="node_item.style_object"
+            @dblclick="onNodeDoubleClick(node_item)"
+            @contextmenu.prevent="onNodeRightClick($event, node_item)"
           >
             <img class="node-icon" :src="node_item.icon_url" />
             <span class="node-title">{{ node_item.name }}</span>
@@ -67,6 +69,17 @@
         </div>
       </div>
     </div>
+    <NodeContextMenu
+    v-model="contextMenu"
+    :nodeItem="contextMenuNodeItem"
+    @rename="handleRename"
+    @delete="handleDelete"
+  />
+  <NodeInfoDialog
+    v-model="nodeInfoDialog"
+    :nodeItem="nodeItemInfo"
+  />
+
   </q-page>
 </template>
 
@@ -76,12 +89,19 @@ import {
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { EVENT_DRAG_STOP, EVENT_CONNECTION, newInstance } from '@jsplumb/browser-ui';
+import NodeContextMenu from 'src/components/Editor/NodeContextMenu.vue';
+import NodeInfoDialog from 'src/components/Editor/NodeInfoDialog.vue';
 import { useEditorStore } from '../../../stores/editor-store';
 import { api } from '../../../boot/axios';
 
 const editorStore = useEditorStore();
 
 const jsPlumbInstance = ref(null);
+const contextMenu = ref(false);
+const contextMenuNodeItem = ref({});
+
+const nodeInfoDialog = ref(false);
+const nodeItemInfo = ref({});
 
 const router = useRouter();
 const route = useRoute();
@@ -259,6 +279,33 @@ async function onDrop(event) {
   } catch (err) {
     console.log(err);
   }
+}
+function onNodeDoubleClick(nodeItem) {
+  nodeItemInfo.value = nodeItem;
+  nodeInfoDialog.value = true;
+}
+function onNodeRightClick(evt, nodeItem) {
+  contextMenuNodeItem.value = nodeItem;
+  contextMenu.value = true;
+}
+function handleRename(item) {
+  console.log('Rename clicked:', item);
+}
+
+async function handleDelete(item) {
+  jsPlumbInstance.value.setSuspendDrawing(true);
+
+  const nod = document.getElementById(item.html_id);
+  jsPlumbInstance.value.deleteConnectionsForElement(nod);
+  jsPlumbInstance.value.removeAllEndpoints(nod);
+
+  nod.remove();
+
+  editorStore.deleteNodeItem(item);
+  contextMenu.value = false;
+
+  jsPlumbInstance.value.setSuspendDrawing(false, true);
+  jsPlumbInstance.value.repaintEverything();
 }
 </script>
 

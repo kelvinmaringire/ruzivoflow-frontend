@@ -99,7 +99,7 @@ async function onLogin() {
         position: 'top',
       });
 
-      router.push({ name: 'predictions' }); // Make sure to import 'router' if you're using Vue Router
+      router.push({ name: 'dashboard' }); // Make sure to import 'router' if you're using Vue Router
     } catch (err) {
       if (err.response.data.detail) {
         $q.notify({
