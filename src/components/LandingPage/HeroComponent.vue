@@ -5,7 +5,7 @@
       <!-- Left Column: Text Content -->
       <div class="col-12 col-md-6 flex flex-center">
         <div class="text-content q-px-md" style="max-width: 600px;">
-          <div class="hero-title text-h4 text-md-h2 q-mb-md">
+          <div class="hero-title text-md-h2 q-mb-md">
             {{ homepage.heroTitle }}
           </div>
           <div class="hero-subtitle text-subtitle1 text-weight-light q-mb-lg"
@@ -22,8 +22,10 @@
               :href="homepage.heroOutlineButtonHref"
             />
             <q-btn
+              flat
               rounded
               unelevated
+              icon="arrow_forward"
               color="info"
               class="full-width full-width-sm"
               :label="homepage.heroFlatButtonTitle"
@@ -65,12 +67,12 @@ const { homepage } = storeToRefs(homePageStore);
   background-clip: text;
   -webkit-background-clip: text;
   line-height: 1.2;
-  font-size: 1.75rem; /* Mobile default (h4) */
+  font-size: 30px; /* Mobile default (h4) */
 }
 
 @media (min-width: 1024px) {
   .hero-title {
-    font-size: 2.5rem; /* Desktop (h2) */
+    font-size: 60px; /* Desktop (h2) */
   }
 }
 
