@@ -1,60 +1,80 @@
 <template>
+  <div class="q-pa-xl bg-dark text-white" id="hero-section">
+    <div class="row q-col-gutter-xl items-center">
 
-    <div class="row bg-dark" id="hero-section">
-
-      <div class="col">
-          <div style="max-width: 650px; margin-left: auto; margin-right: auto; display:block">
-          <div class="hero-title text-h6 q-mt-md q-px-lg q-py-xl " style="line-height: 1" >
-          {{ homepage.heroTitle }}</div>
-          <div class="text-h6 text-weight-light q-px-lg q-pb-sm" v-html="homepage.heroSubtitle">
+      <!-- Left Column: Text Content -->
+      <div class="col-12 col-md-6 flex flex-center">
+        <div class="text-content q-px-md" style="max-width: 600px;">
+          <div class="hero-title text-h4 text-md-h2 q-mb-md">
+            {{ homepage.heroTitle }}
           </div>
-          <q-btn class="glossy q-ml-lg q-my-md" rounded outline color="primary"
-          :label="homepage.heroOutlineButtonTitle" :href="homepage.heroOutlineButtonHref"/>
-          <q-btn class="q-ml-sm q-my-lg" flat color="primary"
-          :label="homepage.heroFlatButtonTitle" :href="homepage.heroFlatButtonHref"/>
+          <div class="hero-subtitle text-subtitle1 text-weight-light q-mb-lg"
+          v-html="homepage.heroSubtitle"></div>
+
+          <div class="q-gutter-sm q-mt-md">
+            <q-btn
+              rounded
+              outline
+              glossy
+              color="primary"
+              class="full-width full-width-sm"
+              :label="homepage.heroOutlineButtonTitle"
+              :href="homepage.heroOutlineButtonHref"
+            />
+            <q-btn
+              rounded
+              unelevated
+              color="info"
+              class="full-width full-width-sm"
+              :label="homepage.heroFlatButtonTitle"
+              :href="homepage.heroFlatButtonHref"
+            />
+          </div>
         </div>
       </div>
-      <div class="col gt-sm q-mt-md">
-        <q-img v-if="homepage.heroImage"
-        :src="homepage.heroImage.image"
-        :alt="homepage.heroImage.name"
-        class="q-my-md animated"
-        style="margin-left: auto;
-        margin-right: auto;
-        display: block;
-        max-width: 750px;
-        height: auto;">
-        </q-img>
+
+      <!-- Right Column: Hero Image -->
+      <div class="col-12 col-md-6 flex flex-center q-mt-md q-mt-none-md">
+        <q-img
+          v-if="homepage.heroImage"
+          :src="homepage.heroImage.image"
+          :alt="homepage.heroImage.name"
+          class="animated"
+          style="max-width: 100%; height: auto;"
+        />
       </div>
     </div>
-
+  </div>
 </template>
 
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useHomePageStore } from '../../stores/homepage-store';
 
-defineOptions({
-  name: 'HeroComponent',
-});
+defineOptions({ name: 'HeroComponent' });
 
 const homePageStore = useHomePageStore();
-
 const { homepage } = storeToRefs(homePageStore);
-
 </script>
 
-<style>
-
+<style scoped>
 .hero-title {
-  font-size: 50px;
-  font-weight: 500;
+  font-weight: 800;
   background-image: linear-gradient(to bottom, #FF9800, #e3dcd3);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+  line-height: 1.2;
+  font-size: 1.75rem; /* Mobile default (h4) */
 }
-#hero-section .animated {
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 2.5rem; /* Desktop (h2) */
+  }
+}
+
+.animated {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
 
@@ -62,10 +82,18 @@ const { homepage } = storeToRefs(homePageStore);
   0% {
     transform: translateY(10px);
   }
-
   100% {
     transform: translateY(-10px);
   }
 }
 
+/* Responsive button styling */
+.full-width-sm {
+  width: 100%;
+}
+@media (min-width: 600px) {
+  .full-width-sm {
+    width: auto;
+  }
+}
 </style>

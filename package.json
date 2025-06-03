@@ -1,8 +1,8 @@
 {
-  "name": "thedatamine.io",
+  "name": "Ruzivoflow",
   "version": "0.0.1",
   "description": "Data Centric Software Solutions",
-  "productName": "thedatamine.io",
+  "productName": "Ruzivoflow",
   "author": "Kelvin Maringire <kelvinmaringire@gmail.com>",
   "private": true,
   "scripts": {

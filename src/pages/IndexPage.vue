@@ -5,7 +5,11 @@
 
     <ServicesComponent></ServicesComponent>
 
-    <LandingPageComponent></LandingPageComponent>
+    <EditorComponent></EditorComponent>
+
+    <TryEditorComponent></TryEditorComponent>
+
+    <PortfolioComponent></PortfolioComponent>
 
     <ContactUsComponent></ContactUsComponent>
 
@@ -16,7 +20,9 @@
 
 import HeroComponent from 'components/LandingPage/HeroComponent.vue';
 import ServicesComponent from 'components/LandingPage/ServicesComponent.vue';
-import LandingPageComponent from 'components/LandingPage/LandingPageComponent.vue';
+import EditorComponent from 'components/LandingPage/EditorComponent.vue';
+import TryEditorComponent from 'components/LandingPage/TryEditorComponent.vue';
+import PortfolioComponent from 'src/components/LandingPage/PortfolioComponent.vue';
 import ContactUsComponent from 'components/LandingPage/ContactUsComponent.vue';
 
 defineOptions({

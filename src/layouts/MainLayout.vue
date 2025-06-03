@@ -16,9 +16,13 @@
           <q-btn flat rounded label="Services" class="q-mr-sm"
           :class="{ 'active': activeTab === 'services' }" @click="scrollTo('services')" />
 
+                    <!-- Editor Button -->
+          <q-btn flat rounded label="Editor" class="q-mr-sm"
+          :class="{ 'active': activeTab === 'editor' }" @click="scrollTo('editor')" />
+
           <!-- Landing Page Button -->
-          <q-btn flat rounded label="Website" class="q-mr-sm"
-          :class="{ 'active': activeTab === 'landing-page' }" @click="scrollTo('landing-page')" />
+          <q-btn flat rounded label="Portfolio" class="q-mr-sm"
+          :class="{ 'active': activeTab === 'portfolio' }" @click="scrollTo('portfolio')" />
 
           <!-- Contact Button (Hidden for now) -->
           <q-btn flat rounded label="Contact" class="q-mr-sm"
@@ -45,7 +49,7 @@
     <q-drawer v-model="leftDrawerOpen" :width="200" bordered>
 
       <q-toolbar-title @click="scrollTo('hero')">
-          <q-img style="width: 200px" src="../assets/logo/thedatamine.io.png"></q-img>
+          <q-img style="width: 200px" src="../assets/logo/logo.png"></q-img>
         </q-toolbar-title>
 
       <!-- Drawer Content -->
@@ -67,11 +71,19 @@
           </q-item-section>
         </q-item>
 
-        <!-- Landing Page Link -->
-        <q-item clickable v-ripple tag="a" href="#landing-page"
-        :class="{ 'active': activeTab === 'landing-page' }" class="q-my-sm">
+                <!-- Editor Link -->
+        <q-item clickable v-ripple tag="a" href="#editor"
+        :class="{ 'active': activeTab === 'editor' }" class="q-my-sm">
           <q-item-section class="flex flex-center">
-          <q-item-label class="text-h6">Website</q-item-label>
+          <q-item-label class="text-h6">Editor</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Landing Page Link -->
+        <q-item clickable v-ripple tag="a" href="#portfolio"
+        :class="{ 'active': activeTab === 'portfolio' }" class="q-my-sm">
+          <q-item-section class="flex flex-center">
+          <q-item-label class="text-h6">Portfolio</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -101,10 +113,10 @@
     </q-page-container>
 
     <!-- Footer -->
-    <q-footer elevated class="bg-brown-9 q-mt-lg-xl">
+    <q-footer elevated class="bg-blue-grey-10 q-mt-lg-xl">
       <q-toolbar>
-        <q-toolbar-title class="flex flex-center">
-          &copy; 2024 thedatamine.io. All rights reserved.
+        <q-toolbar-title class="flex flex-center q-py-lg">
+          &copy; 2024 Ruzivoflow. All rights reserved.
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
