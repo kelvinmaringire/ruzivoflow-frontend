@@ -2,13 +2,13 @@
   <section id="try" class="q-pa-lg">
     <div class="text-center q-mb-xl">
       <h2 class="section-title text-h4 text-weight-bold q-mb-md">
-        Try Ruzivo Flow Node Editor 🚀
+        {{ homepage.try_editor_title }}
       </h2>
       <p class="section-subtitle text-body1 q-mb-md">
-        Experience the power of our no-code/low-code data analytics platform
+        {{ homepage.try_editor_subtitle }}
       </p>
       <p class="section-description text-body1 q-px-xl">
-        Get started with our demo account to explore the Ruzivo Flow Node Editor! Use the credentials below to try out the platform. Since the demo account is shared by many users, we recommend creating your own account to save your workflows securely and enjoy a personalized experience. 🔒
+        {{ homepage.try_editor_description }}
       </p>
     </div>
 
@@ -20,8 +20,8 @@
             <q-icon name="login" size="48px" class="q-mb-md" color="primary" />
             <h4 class="text-h6 text-weight-bold q-mb-sm">Demo Account</h4>
             <p class="text-body2">
-              <strong>Username:</strong> demo <br />
-              <strong>Password:</strong> Demo123!
+              <strong>Username:</strong> {{ homepage.try_editor_username }} <br />
+              <strong>Password:</strong> {{ homepage.try_editor_password }}
             </p>
             <q-btn
               color="positive"
@@ -29,12 +29,24 @@
               icon="login"
               size="md"
               class="q-mt-md"
-              to="/login"
+              :to="{name: 'login'}"
+              v-if="!isAuthenticated"
               unelevated
+            />
+            <q-btn
+              color="primary"
+              label="Go to Demo Account"
+              icon="login"
+              size="md"
+              class="q-mt-md"
+              :to="{name: 'workflows'}"
+              v-if="isAuthenticated"
+              unelevated
+              outline
             />
             <q-separator class="q-my-md" />
             <p class="text-caption text-grey-7">
-              This account is for demo purposes only and shared among multiple users. Your workflows may not be private.
+              {{ homepage.try_editor_subtitle_box }}
             </p>
           </q-card-section>
         </q-card>
@@ -42,10 +54,10 @@
     </div>
 
     <!-- Call to Action Section -->
-    <div class="text-center">
+    <div class="text-center" v-if="!isAuthenticated">
       <h3 class="text-h5 text-weight-bold q-mb-lg">Create Your Own Account 🌟</h3>
       <p class="text-body1 q-mb-md q-px-xl">
-        Sign up for a free account to save your workflows, access advanced features, and keep your data secure.
+        {{ homepage.try_editor_subtitle_signup }}
       </p>
       <q-btn
         color="info"
@@ -53,7 +65,7 @@
         icon="person_add"
         size="lg"
         class="q-mt-md"
-        to="/signup"
+        :to="{name: 'register'}"
         unelevated
         outline
       />
@@ -62,9 +74,19 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
+import { useHomePageStore } from '../../stores/homepage-store';
+import { useAuthStore } from '../../stores/auth-store';
+
+const authStore = useAuthStore();
+const { isAuthenticated } = storeToRefs(authStore);
+
 defineOptions({
-  name: 'TryRuzivo',
+  name: 'TryEditorComponent',
 });
+
+const homePageStore = useHomePageStore();
+const { homepage } = storeToRefs(homePageStore);
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-xl bg-dark text-white" id="hero-section">
+  <div class="q-pa-xl bg-dark text-white" id="hero-section" v-if="homepage">
     <div class="row q-col-gutter-xl items-center">
 
       <!-- Left Column: Text Content -->

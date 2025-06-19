@@ -26,7 +26,7 @@
         <div class="text-h6">{{ nodeItem.name }}</div>
       </q-card-section>
 
-      <component :is="getComponent()" :nodeItemId="nodeItem.id" />
+      <component :is="getComponent()" :nodeItemId="nodeItem.id"/>
 
     </q-card>
   </q-dialog>

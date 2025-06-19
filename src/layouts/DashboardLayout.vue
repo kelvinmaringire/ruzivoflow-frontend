@@ -6,7 +6,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-img style="width: 250px" src="../assets/logo/thedatamine.io.png"></q-img>
+          <q-img style="width: 250px" src="../assets/logo/logo.png"></q-img>
         </q-toolbar-title>
 
         <q-btn flat dense color="primary" icon="home" :to="{name: 'homepage'}" class="q-mr-xs">

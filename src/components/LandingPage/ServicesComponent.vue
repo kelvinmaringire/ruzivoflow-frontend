@@ -5,7 +5,7 @@
         {{ homepage.services_title }}
       </h2>
       <p class="section-subtitle">
-        Powerful solutions tailored to your data needs
+        {{ homepage.services_subtitle }}
       </p>
     </div>
 

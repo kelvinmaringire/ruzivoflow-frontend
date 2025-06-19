@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-3">
         <div class="text-h4 text-weight-bold text-blue-grey-3 q-pa-md"
-        v-if="workflowNodeItems && workflowNodeItems.name">
-          {{ workflowNodeItems.name }}
+        v-if="workflowName">
+          {{ workflowName}}
           </div>
         <q-list bordered class="rounded-borders bg-dark flowchart-demo">
           <q-expansion-item
@@ -26,7 +26,6 @@
                 >
                   <div v-for="node in chunk" :key="node.id" class="col-3">
                     <div
-                      v-if="node.show"
                       :id="node.html_id"
                       class="window jtk-node relative"
                       draggable="true"
@@ -49,7 +48,7 @@
       </div>
       <div class="col-md-9">
         <div
-          v-if="workflowNodeItems && workflowNodeItems.node_items"
+          v-if="nodeItems"
           @dragover="onDragOver($event)"
           @drop="onDrop($event)"
           class="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan"
@@ -57,7 +56,7 @@
         >
           <div
             class="window jtk-node absolute"
-            v-for="(node_item, index) in workflowNodeItems.node_items"
+            v-for="(node_item, index) in nodeItems"
             :key="index"
             :id="node_item.html_id"
             :style="node_item.style_object"
@@ -86,8 +85,9 @@
 
 <script setup>
 import {
-  ref, computed, onMounted, nextTick,
+  ref, onMounted, nextTick,
 } from 'vue';
+import { debounce, uid } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
 import {
   EVENT_DRAG_STOP, EVENT_CONNECTION, EVENT_CONNECTION_DETACHED, newInstance,
@@ -95,7 +95,6 @@ import {
 import NodeContextMenu from 'src/components/Editor/NodeContextMenu.vue';
 import NodeInfoDialog from 'src/components/Editor/NodeInfoDialog.vue';
 import { useEditorStore } from '../../../stores/editor-store';
-import { api } from '../../../boot/axios';
 
 const editorStore = useEditorStore();
 
@@ -103,23 +102,15 @@ const jsPlumbInstance = ref(null);
 const contextMenu = ref(false);
 const contextMenuNodeItem = ref({});
 
+const workflowName = ref('');
+const connections = ref([]);
+const nodeItems = ref([]);
+
 const nodeInfoDialog = ref(false);
 const nodeItemInfo = ref({});
 
 const router = useRouter();
 const route = useRoute();
-
-const workflowNodeItems = computed(() => {
-  if (!route.params.id || !editorStore.workflow_node_items) {
-    return null;
-  }
-
-  const workflowId = JSON.parse(route.params.id);
-  const workflows = editorStore.workflow_node_items;
-  const workflow = workflows.find((wf) => wf.id === workflowId);
-
-  return workflow || null;
-});
 
 function addEndpointsToNode(nodeElement, type) {
   const js = jsPlumbInstance.value;
@@ -139,14 +130,30 @@ function addEndpointsToNode(nodeElement, type) {
   }
 }
 
-onMounted(async () => {
-  await nextTick();
+const debouncedSavePosition = debounce((id, left, top) => {
+  const posNodeItem = nodeItems.value.find((item) => item.html_id === id);
+  const posObject = { style_object: { top: `${top}px`, left: `${left}px` } };
+  if (posNodeItem) {
+    editorStore.patchNodeItem(posNodeItem, posObject);
+    nodeItems.value.style_object = posObject.style_object;
+  }
+}, 300);
 
+onMounted(async () => {
   const container = document.getElementById('canvas');
 
   if (!container) {
     router.push({ name: 'workflows' });
   }
+  const workflowId = JSON.parse(route.params.id);
+  const workflows = editorStore.workflow_node_items;
+  const workflow = workflows.find((wf) => wf.id === workflowId);
+
+  nodeItems.value = JSON.parse(JSON.stringify(workflow.node_items));
+  connections.value = JSON.parse(JSON.stringify(workflow.connections));
+  workflowName.value = JSON.parse(JSON.stringify(workflow.name));
+
+  await nextTick();
 
   jsPlumbInstance.value = newInstance({
     container,
@@ -158,16 +165,19 @@ onMounted(async () => {
     },
     endpointStyle: { fill: '#ff9800' },
     paintStyle: { strokeWidth: 3, stroke: '#ff9800' },
+
   });
 
   jsPlumbInstance.value.setSuspendDrawing(true);
 
-  workflowNodeItems.value.node_items.forEach((nodeItem) => {
+  // Initialize nodes with endpoints
+  nodeItems.value.forEach((nodeItem) => {
     const node = document.getElementById(nodeItem.html_id);
     addEndpointsToNode(node, nodeItem.type);
   });
 
-  workflowNodeItems.value.connections.forEach((conn) => {
+  // Initialize connections with endpoints
+  connections.value.forEach((conn) => {
     const sourceNode = document.getElementById(conn.sourceId);
     const targetNode = document.getElementById(conn.targetId);
 
@@ -179,49 +189,42 @@ onMounted(async () => {
   });
 
   jsPlumbInstance.value.setSuspendDrawing(false, true);
+  jsPlumbInstance.value.repaintEverything();
 
   jsPlumbInstance.value.bind(EVENT_DRAG_STOP, (payload) => {
     payload.elements.forEach((el) => {
-      const { id } = el; // Element's ID
-      const left = el.pos.x; // X-coordinate (left)
-      const top = el.pos.y; // Y-coordinate (top)
+      const { id } = el;
+      const left = el.pos.x;
+      const top = el.pos.y;
 
-      const posNodeItem = workflowNodeItems.value.node_items.find((item) => item.html_id === id);
-      if (posNodeItem) {
-        // Optionally, save the new position to your server via an API call
-        api.patch(`thedataeditor/node_item/${posNodeItem.id}/`, {
-          style_object: {
-            top: `${top}px`,
-            left: `${left}px`,
-          },
-        })
-          .then((response) => {
-            editorStore.editNodeItem(response.data);
-          })
-          .catch((err) => {
-            console.error('Error saving position:', err);
-          });
-      }
+      debouncedSavePosition(id, left, top);
     });
   });
 
   jsPlumbInstance.value.bind(EVENT_CONNECTION, (payload) => {
-    api.post('thedataeditor/connection/', { workflow: JSON.parse(route.params.id), sourceId: payload.sourceId, targetId: payload.targetId })
-      .then((response) => {
-        editorStore.addConnection(response.data);
+    const conn = {
+      workflow: JSON.parse(route.params.id),
+      sourceId: payload.sourceId,
+      targetId: payload.targetId,
+    };
+
+    editorStore.addConnection(conn)
+      .then((responseData) => {
+        connections.value.push(responseData);
+      })
+      .catch((error) => {
+        console.error('Failed to add connection:', error);
       });
   });
 
   jsPlumbInstance.value.bind(EVENT_CONNECTION_DETACHED, (payload) => {
     const conn = workflowNodeItems.value.connections.find((con) => con.sourceId === payload.sourceId
     && con.targetId === payload.targetId);
-
-    if (conn) {
-      api.delete(`thedataeditor/connection/${conn.id}/`)
-        .then(() => {
-          editorStore.deleteConnection(conn);
-        });
-    }
+    console.log(conn);
+    api.delete(`thedataeditor/connection/${conn.id}/`)
+      .then((response) => {
+        editorStore.deleteConnection(response.data);
+      });
   });
 });
 
@@ -236,12 +239,13 @@ function onDragOver(event) {
 async function onDrop(event) {
   const OriginalId = event.dataTransfer.getData('text');
   const node = editorStore.nodes.find((nod) => nod.html_id === OriginalId);
+
   const newNodeItem = {
     node: node.id,
     original_name: node.name,
     original_id: node.html_id,
     name: node.name,
-    html_id: node.html_id + new Date().getTime(),
+    html_id: `node_${uid().slice(0, 8)}`,
     icon: node.icon,
     icon_url: node.icon_url,
     type: node.type,
@@ -253,16 +257,29 @@ async function onDrop(event) {
     response_data: {},
     workflow: JSON.parse(route.params.id),
   };
+
   try {
-    const response = await api.post('thedataeditor/node_item/', newNodeItem);
-    const nodeItem = response.data;
-    // workflowNodeItems.value.node_items.push(nodeItem);
-    editorStore.addNodeItem(nodeItem);
+    // Wait for the node to be added to the store
+    const responseData = await editorStore.addNodeItem(newNodeItem);
+
+    // Add to local ref
+    nodeItems.value.push(responseData);
+
+    // Wait for DOM update
     await nextTick();
-    const nod = document.getElementById(nodeItem.html_id);
-    addEndpointsToNode(nod, nodeItem.type);
-  } catch (err) {
-    console.log(err);
+
+    // Get the DOM element
+    const nod = document.getElementById(responseData.html_id);
+
+    if (!nod) {
+      console.error('Node element not found in DOM');
+      return;
+    }
+
+    // Initialize jsPlumb endpoints
+    addEndpointsToNode(nod, responseData.type);
+  } catch (error) {
+    console.error('Error in onDrop:', error);
   }
 }
 function onNodeDoubleClick(nodeItem) {
@@ -270,8 +287,11 @@ function onNodeDoubleClick(nodeItem) {
   nodeInfoDialog.value = true;
 }
 function onNodeRightClick(evt, nodeItem) {
+  jsPlumbInstance.value.setSuspendDrawing(true);
   contextMenuNodeItem.value = nodeItem;
   contextMenu.value = true;
+  jsPlumbInstance.value.setSuspendDrawing(false, true);
+  jsPlumbInstance.value.repaintEverything();
 }
 function handleRename(item) {
   console.log('Rename clicked:', item);
@@ -280,22 +300,25 @@ function handleRename(item) {
 async function handleDelete(item) {
   jsPlumbInstance.value.setSuspendDrawing(true);
 
-  const { connections } = workflowNodeItems.value;
-  const relatedConnections = connections.filter(
-    (conn) => conn.sourceId === item.html_id || conn.targetId === item.html_id,
-  );
-  relatedConnections.forEach((conn) => editorStore.deleteConnection(conn));
-
-  const nod = document.getElementById(item.html_id);
-  jsPlumbInstance.value.removeAllEndpoints(nod);
-  jsPlumbInstance.value.unmanage(nod);
-
   await editorStore.deleteNodeItem(item);
 
-  jsPlumbInstance.value.setSuspendDrawing(false, true);
+  const nod = document.getElementById(item.html_id);
+  if (nod) {
+    jsPlumbInstance.value.removeAllEndpoints(nod);
+    jsPlumbInstance.value.unmanage(nod);
+  }
+
+  const index = nodeItems.value.findIndex((nd) => nd.id === item.id);
+  if (index !== -1) {
+    nodeItems.value.splice(index, 1);
+  }
 
   contextMenu.value = false;
+
+  jsPlumbInstance.value.setSuspendDrawing(false, true);
+  jsPlumbInstance.value.repaintEverything();
 }
+
 </script>
 
 <style>

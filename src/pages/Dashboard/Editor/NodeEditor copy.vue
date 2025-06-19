@@ -26,7 +26,6 @@
                 >
                   <div v-for="node in chunk" :key="node.id" class="col-3">
                     <div
-                      v-if="node.show"
                       :id="node.html_id"
                       class="window jtk-node relative"
                       draggable="true"
@@ -89,9 +88,7 @@ import {
   ref, computed, onMounted, nextTick,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import {
-  EVENT_DRAG_STOP, EVENT_CONNECTION, EVENT_CONNECTION_DETACHED, newInstance,
-} from '@jsplumb/browser-ui';
+import { EVENT_DRAG_STOP, EVENT_CONNECTION, newInstance } from '@jsplumb/browser-ui';
 import NodeContextMenu from 'src/components/Editor/NodeContextMenu.vue';
 import NodeInfoDialog from 'src/components/Editor/NodeInfoDialog.vue';
 import { useEditorStore } from '../../../stores/editor-store';
@@ -121,24 +118,6 @@ const workflowNodeItems = computed(() => {
   return workflow || null;
 });
 
-function addEndpointsToNode(nodeElement, type) {
-  const js = jsPlumbInstance.value;
-  switch (type) {
-    case 'sourceAnchor':
-      js.addEndpoint(nodeElement, { anchors: 'Right', source: true });
-      break;
-    case 'targetAnchor':
-      js.addEndpoint(nodeElement, { anchor: 'Left', target: true });
-      break;
-    case 'sourceTargetAnchor':
-      js.addEndpoint(nodeElement, { anchors: 'Right', source: true });
-      js.addEndpoint(nodeElement, { anchor: 'Left', target: true });
-      break;
-    default:
-      alert('Something is wrong with the node, please contact the dev team');
-  }
-}
-
 onMounted(async () => {
   await nextTick();
 
@@ -164,7 +143,29 @@ onMounted(async () => {
 
   workflowNodeItems.value.node_items.forEach((nodeItem) => {
     const node = document.getElementById(nodeItem.html_id);
-    addEndpointsToNode(node, nodeItem.type);
+    const { type } = nodeItem;
+    if (type === 'sourceAnchor') {
+      jsPlumbInstance.value.addEndpoint(node, {
+        anchors: 'Right',
+        source: true,
+      });
+    } else if (type === 'sourceTargetAnchor') {
+      jsPlumbInstance.value.addEndpoint(node, {
+        anchors: 'Right',
+        source: true,
+      });
+      jsPlumbInstance.value.addEndpoint(node, {
+        anchor: 'Left',
+        target: true,
+      });
+    } else if (type === 'targetAnchor') {
+      jsPlumbInstance.value.addEndpoint(node, {
+        anchor: 'Left',
+        target: true,
+      });
+    } else {
+      alert('Something is wrong with the node, please contact the dev team');
+    }
   });
 
   workflowNodeItems.value.connections.forEach((conn) => {
@@ -196,7 +197,12 @@ onMounted(async () => {
           },
         })
           .then((response) => {
-            editorStore.editNodeItem(response.data);
+            const newPosNodeItem = response.data;
+            const nodeItem = workflowNodeItems.value.node_items.find(
+              (node) => node.id === newPosNodeItem.id,
+            );
+            const index = workflowNodeItems.value.node_items.indexOf(nodeItem);
+            workflowNodeItems.value.node_items[index] = newPosNodeItem;
           })
           .catch((err) => {
             console.error('Error saving position:', err);
@@ -208,20 +214,8 @@ onMounted(async () => {
   jsPlumbInstance.value.bind(EVENT_CONNECTION, (payload) => {
     api.post('thedataeditor/connection/', { workflow: JSON.parse(route.params.id), sourceId: payload.sourceId, targetId: payload.targetId })
       .then((response) => {
-        editorStore.addConnection(response.data);
+        workflowNodeItems.value.connections.push(response.data);
       });
-  });
-
-  jsPlumbInstance.value.bind(EVENT_CONNECTION_DETACHED, (payload) => {
-    const conn = workflowNodeItems.value.connections.find((con) => con.sourceId === payload.sourceId
-    && con.targetId === payload.targetId);
-
-    if (conn) {
-      api.delete(`thedataeditor/connection/${conn.id}/`)
-        .then(() => {
-          editorStore.deleteConnection(conn);
-        });
-    }
   });
 });
 
@@ -256,11 +250,32 @@ async function onDrop(event) {
   try {
     const response = await api.post('thedataeditor/node_item/', newNodeItem);
     const nodeItem = response.data;
-    // workflowNodeItems.value.node_items.push(nodeItem);
-    editorStore.addNodeItem(nodeItem);
+    workflowNodeItems.value.node_items.push(nodeItem);
     await nextTick();
     const nod = document.getElementById(nodeItem.html_id);
-    addEndpointsToNode(nod, nodeItem.type);
+    const { type } = nodeItem;
+    if (type === 'sourceAnchor') {
+      jsPlumbInstance.value.addEndpoint(nod, {
+        anchors: 'Right',
+        source: true,
+      });
+    } else if (type === 'sourceTargetAnchor') {
+      jsPlumbInstance.value.addEndpoint(nod, {
+        anchors: 'Right',
+        source: true,
+      });
+      jsPlumbInstance.value.addEndpoint(nod, {
+        anchor: 'Left',
+        target: true,
+      });
+    } else if (type === 'targetAnchor') {
+      jsPlumbInstance.value.addEndpoint(nod, {
+        anchor: 'Left',
+        target: true,
+      });
+    } else {
+      alert('Something is wrong with the node, please contact the dev team');
+    }
   } catch (err) {
     console.log(err);
   }
@@ -280,21 +295,17 @@ function handleRename(item) {
 async function handleDelete(item) {
   jsPlumbInstance.value.setSuspendDrawing(true);
 
-  const { connections } = workflowNodeItems.value;
-  const relatedConnections = connections.filter(
-    (conn) => conn.sourceId === item.html_id || conn.targetId === item.html_id,
-  );
-  relatedConnections.forEach((conn) => editorStore.deleteConnection(conn));
-
   const nod = document.getElementById(item.html_id);
+  jsPlumbInstance.value.deleteConnectionsForElement(nod);
   jsPlumbInstance.value.removeAllEndpoints(nod);
-  jsPlumbInstance.value.unmanage(nod);
 
-  await editorStore.deleteNodeItem(item);
+  nod.remove();
+
+  editorStore.deleteNodeItem(item);
+  contextMenu.value = false;
 
   jsPlumbInstance.value.setSuspendDrawing(false, true);
-
-  contextMenu.value = false;
+  jsPlumbInstance.value.repaintEverything();
 }
 </script>
 

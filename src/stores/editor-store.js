@@ -72,8 +72,16 @@ export const useEditorStore = defineStore('editor', {
       const index = this.node_items.indexOf(editedNodeItem);
       this.node_items[index] = response.data;
     },
-    async editNodeItem(nodeItem) {
-      const response = await api.put(`thedataeditor/node_item/${nodeItem.id}/`, nodeItem);
+    addNodeItem(nodeItem) {
+      this.node_items.push(nodeItem);
+    },
+    editNodeItem(nodeItem) {
+      const editedNodeItem = this.node_items.find((nd) => nd.id === nodeItem.id);
+      const index = this.node_items.indexOf(editedNodeItem);
+      this.node_items[index] = nodeItem;
+    },
+    async patchNodeItem(nodeItem, nodeObject) {
+      const response = await api.patch(`thedataeditor/node_item/${nodeItem.id}/`, nodeObject);
       const editedNodeItem = this.node_items.find((nd) => nd.id === nodeItem.id);
       const index = this.node_items.indexOf(editedNodeItem);
       this.node_items[index] = response.data;
@@ -87,6 +95,14 @@ export const useEditorStore = defineStore('editor', {
     async fetchConnections() {
       const response = await api.get('thedataeditor/connection/');
       this.connections = response.data;
+    },
+    addConnection(conn) {
+      this.connections.push(conn);
+    },
+    deleteConnection(conn) {
+      const deletedConnection = this.connections.find((con) => con.id === conn.id);
+      const index = this.connections.indexOf(deletedConnection);
+      this.connections.splice(index, 1);
     },
     async createWorkflow(workflow) {
       const response = await api.post('thedataeditor/', workflow);

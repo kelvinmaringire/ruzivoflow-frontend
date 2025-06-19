@@ -2,8 +2,11 @@
   <section id="contact" class="q-pa-lg">
     <div class="text-center q-mb-xl">
       <h2 class="section-title text-h4 text-weight-bold q-mb-md">
-        Contact
+        {{ homepage.contact_title }}
       </h2>
+      <p class="section-subtitle">
+        {{ homepage.contact_subtitle }}
+      </p>
     </div>
 
     <div class="row q-col-gutter-md">
@@ -36,24 +39,23 @@
         <q-card class="my-card">
           <q-card-section>
             <div class="text-h4">
-              Get in touch
-              <q-icon color="warning" name="sentiment_very_satisfied" />
+              {{ homepage.contact_box_title }}
             </div>
           </q-card-section>
 
           <q-card-section class="text-h6 text-weight-light">
             <q-icon size="md" color="primary" name="place" class="q-mr-sm" />
-            13 Long St, Hermanus, 7200, Western Cape, SA
+            {{ homepage.contact_location }}
           </q-card-section>
 
           <q-card-section class="text-h6 text-weight-light">
             <q-icon size="md" color="primary" name="email" class="q-mr-sm" />
-            kelvinmaringire@gmail.com
+            {{ homepage.contact_email }}
           </q-card-section>
 
           <q-card-section class="text-h6 text-weight-light">
             <q-icon size="md" color="primary" name="call" class="q-mr-sm" />
-            +27 65 826 1000
+            {{ homepage.contact_phone_number }}
           </q-card-section>
 
           <q-separator class="q-my-md" />
@@ -68,34 +70,10 @@
 
           <q-card-section class="text-h6 q-pb-lg">
             <div class="row">
-              <div class="col">
-                <a href="https://www.facebook.com/thedatamine" target="_blank">
-                  <img src="~assets/landing_page/facebook.png" />
-                </a>
-              </div>
-              <div class="col">
-                <a href="https://www.instagram.com/thedatamine.io/" target="_blank">
-                  <img src="~assets/landing_page/instagram.png" />
-                </a>
-              </div>
-              <div class="col">
-                <a href="https://www.linkedin.com/company/thedatamine" target="_blank">
-                  <img src="~assets/landing_page/linkedin.png" />
-                </a>
-              </div>
-              <div class="col">
-                <a href="https://youtube.com/@thedatamineio" target="_blank">
-                  <img src="~assets/landing_page/youtube.png" />
-                </a>
-              </div>
-              <div class="col">
-                <a href="https://www.tiktok.com/@thedatamine.io" target="_blank">
-                  <img src="~assets/landing_page/tiktok.png" />
-                </a>
-              </div>
-              <div class="col">
-                <a href="https://github.com/kelvinmaringire/" target="_blank">
-                  <img src="~assets/landing_page/github-sign.png" />
+              <div class="col"
+              v-for="(social_media, index) in homepage.social_media_items" :key="index">
+                <a :href="social_media.link" target="_blank">
+                  <img :src="social_media.image.image" :alt="social_media.image.name" />
                 </a>
               </div>
             </div>
@@ -108,11 +86,15 @@
 
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
 import { useAuthStore } from '../../stores/auth-store';
+import { useHomePageStore } from '../../stores/homepage-store';
 
 const authStore = useAuthStore();
 const $q = useQuasar();
+const homePageStore = useHomePageStore();
+const { homepage } = storeToRefs(homePageStore);
 
 const contactForm = ref({
   fullname: '',
